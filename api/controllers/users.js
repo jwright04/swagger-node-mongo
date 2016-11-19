@@ -24,8 +24,7 @@ function getOne (req, res, next) {
 
     let id    = req.swagger.params.id.value; //req.swagger contains the path parameters
     let user = db.find(id);
-
-    console.log("USER", user);
+    
     if (user) {
 
         res.json(user);
