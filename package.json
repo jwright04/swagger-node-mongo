@@ -13,7 +13,7 @@
     "swagger": "swagger project start",
     "edit": "swagger project edit",
     "test": "swagger project test",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && semantic-release post"
   },
   "dependencies": {
     "crypto": "0.0.3",
