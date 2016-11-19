@@ -35,6 +35,10 @@
         "type": "git",
         "url":  "https://github.com/jwright04/swagger-node-mongo.git"
     },
+    "engines": {
+        "node": "6.x",
+        "npm": "3.x"
+    },
     "czConfig":        {
         "path": "node_modules/cz-conventional-changelog"
     }
