@@ -50,7 +50,7 @@ describe('controllers', () => {
                 request(server)
                     .post('/users')
                     .expect('Content-Type', /json/)
-                    .expect('Content-Length', '40')
+                    .expect('Content-Length', '41')
                     .field('id', rNumber(15))
                     .field('firstName', "Jane")
                     .field('lastName', "Doe")
