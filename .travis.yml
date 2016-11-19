@@ -7,7 +7,6 @@ branches:
     - master
 notifications:
   email: false
-
 node_js:
   - '7'
   - '6'
@@ -20,6 +19,3 @@ script:
 
 after_success:
   - npm run semantic-release
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
