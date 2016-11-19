@@ -28,6 +28,7 @@
   "devDependencies": {
     "commitizen": "2.8.6",
     "cz-conventional-changelog": "1.2.0",
+    "last-release-git": "0.0.2",
     "semantic-release": "^6.3.2",
     "should": "^7.1.0",
     "supertest": "^1.0.0"
@@ -42,5 +43,8 @@
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"
+  },
+  "release": {
+    "getLastRelease": "last-release-git"
   }
 }
