@@ -14,7 +14,7 @@
     "edit": "swagger project edit",
     "test": "istanbul cover -x '**/test/**' _mocha -- -R spec test/api/controllers/users.js",
     "check-coverage": "istanbul check-coverage --statements 20 --branches 20 --functions 20 --lines 20",
-    "report-coverage": "cat ./coverage/lcov | codecov",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release pre && semantic-release post"
   },
   "dependencies": {
