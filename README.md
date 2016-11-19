@@ -1,1 +1,1 @@
-# Skeleton project for Swagger
+# Swagger Node Mongo Starter (Work In Progress)
