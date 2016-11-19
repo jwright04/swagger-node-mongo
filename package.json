@@ -1,27 +1,41 @@
 {
-  "name": "register-users",
-  "version": "0.0.1",
-  "private": true,
-  "description": "New Swagger API Project",
-  "keywords": [],
-  "author": "",
-  "license": "",
-  "main": "app.js",
-  "dependencies": {
-    "crypto": "0.0.3",
-    "express": "^4.12.3",
-    "genrandom": "1.3.5",
-    "nodemon": "^1.11.0",
-    "swagger-express-mw": "^0.1.0"
-  },
-  "devDependencies": {
-    "should": "^7.1.0",
-    "supertest": "^1.0.0"
-  },
-  "scripts": {
-    "start": "nodemon app.js",
-    "swagger": "swagger project start",
-    "edit": "swagger project edit",
-    "test": "swagger project test"
-  }
+    "name":            "register-users",
+    "version":         "0.0.0-semantically-released",
+    "private":         true,
+    "description":     "New Swagger API Project",
+    "keywords":        [ ],
+    "author":          "",
+    "license":         "",
+    "main":            "app.js",
+    "scripts":         {
+        "commit":           "git-cz",
+        "start":            "nodemon app.js",
+        "swagger":          "swagger project start",
+        "edit":             "swagger project edit",
+        "test":             "swagger project test",
+        "semantic-release": "semantic-release pre && semantic-release post"
+    },
+    "dependencies":    {
+        "crypto":             "0.0.3",
+        "express":            "4.14.0",
+        "genrandom":          "1.3.5",
+        "mocha":              "3.1.2",
+        "nock":               "9.0.2",
+        "nodemon":            "^1.11.0",
+        "swagger-express-mw": "^0.1.0"
+    },
+    "devDependencies": {
+        "commitizen":                "2.8.6",
+        "cz-conventional-changelog": "1.2.0",
+        "semantic-release":          "^6.3.2",
+        "should":                    "^7.1.0",
+        "supertest":                 "^1.0.0"
+    },
+    "repository":      {
+        "type": "git",
+        "url":  "https://github.com/jwright04/swagger-node-mongo.git"
+    },
+    "czConfig":        {
+        "path": "node_modules/cz-conventional-changelog"
+    }
 }

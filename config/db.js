@@ -13,7 +13,6 @@ module.exports = function(){
 
         find(id){
 
-            console.log("ID", id);
             if(id){
                 return this.usersList.find((user) => {
                     return user.id === id;
