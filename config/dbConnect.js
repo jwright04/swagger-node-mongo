@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let devDBUrl = 'mongodb://localhost/swagger';
+let devDBUrl = 'mongodb://localhost:27017/swagger';
 let MONGO_URL = process.env.MONGO_URL || devDBUrl;
 
 mongoose.connect(MONGO_URL);
