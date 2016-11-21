@@ -1,6 +1,7 @@
 'use strict;'
 //Include crypto to generate the movie id
 let crypto = require('crypto');
+let mongoose = require('mongoose');
 
 module.exports = function(){
     return {

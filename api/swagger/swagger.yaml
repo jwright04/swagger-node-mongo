@@ -4,9 +4,9 @@ info:
   title: Swagger Implementation App
 # during dev, should point to your local machine
 host: localhost:10010
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -56,7 +56,7 @@ paths:
             description: Error
             schema:
               $ref: "#/definitions/ErrorResponse"
-              
+
   /users/{id}:
     # our controller name
     x-swagger-router-controller: users
@@ -143,7 +143,7 @@ definitions:
       - firstName
       - lastName
       - email
-    
+
   ErrorResponse:
     required:
       - message
@@ -168,15 +168,15 @@ definitions:
               type: string
             email:
               type: string
-              
+
   GetUserResponse:
       required:
-        - id
+        - _id
         - firstName
         - lastName
         - email
       properties:
-        id:
+        _id:
           type: string
         firstName:
           type: string
@@ -184,7 +184,7 @@ definitions:
           type: string
         email:
           type: string
-              
+
   GeneralResponse:
     type: object
     properties:
@@ -197,4 +197,4 @@ definitions:
     required:
       - success
       - description
-              
+

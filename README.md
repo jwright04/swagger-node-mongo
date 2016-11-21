@@ -4,3 +4,11 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://en.wikipedia.org/wiki/MIT_License)
 
 # Swagger Node Mongo Starter (Work In Progress)
+
+TODO:
+
+[ ] Better test coverage
+
+[x] Add swagger-ui
+
+[x] Add mongoDB as database option

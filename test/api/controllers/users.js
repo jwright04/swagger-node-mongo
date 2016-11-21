@@ -34,7 +34,6 @@ describe('controllers', () => {
                 request(server)
                     .get('/users')
                     .expect('Content-Type', /json/)
-                    .expect('Content-Length', '12')
                     .expect(200)
                     .end((err, res) => {
                         if (err) {
@@ -50,7 +49,6 @@ describe('controllers', () => {
                 request(server)
                     .post('/users')
                     .expect('Content-Type', /json/)
-                    .expect('Content-Length', '40')
                     .field('id', rNumber(15))
                     .field('firstName', "Jane")
                     .field('lastName', "Doe")

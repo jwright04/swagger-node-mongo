@@ -1,0 +1,268 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "version": "0.0.1",
+  "title": "Swagger Implementation App"
+ },
+ "host": "localhost:10010",
+ "basePath": "/",
+ "schemes": [
+  "http",
+  "https"
+ ],
+ "consumes": [
+  "application/json",
+  "application/x-www-form-urlencoded",
+  "multipart/form-data"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "paths": {
+  "/users": {
+   "x-swagger-router-controller": "users",
+   "get": {
+    "operationId": "getAll",
+    "description": "get the users list",
+    "responses": {
+     "200": {
+      "description": "Success",
+      "schema": {
+       "$ref": "#/definitions/GetUsersListResponse"
+      }
+     },
+     "default": {
+      "description": "Error",
+      "schema": {
+       "$ref": "#/definitions/ErrorResponse"
+      }
+     }
+    }
+   },
+   "post": {
+    "operationId": "save",
+    "description": "create a new user",
+    "parameters": [
+     {
+      "name": "user",
+      "description": "users first name",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/Users"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Success",
+      "schema": {
+       "$ref": "#/definitions/GeneralResponse"
+      }
+     },
+     "default": {
+      "description": "Error",
+      "schema": {
+       "$ref": "#/definitions/ErrorResponse"
+      }
+     }
+    }
+   }
+  },
+  "/users/{id}": {
+   "x-swagger-router-controller": "users",
+   "get": {
+    "operationId": "getOne",
+    "description": "get a user",
+    "parameters": [
+     {
+      "name": "id",
+      "type": "string",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Success",
+      "schema": {
+       "$ref": "#/definitions/GetUserResponse"
+      }
+     },
+     "default": {
+      "description": "Error",
+      "schema": {
+       "$ref": "#/definitions/ErrorResponse"
+      }
+     }
+    }
+   },
+   "put": {
+    "operationId": "update",
+    "description": "update a user",
+    "parameters": [
+     {
+      "name": "id",
+      "description": "user id",
+      "type": "string",
+      "in": "path",
+      "required": true
+     },
+     {
+      "name": "firstName",
+      "description": "user firstName",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/Users"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Success",
+      "schema": {
+       "$ref": "#/definitions/GeneralResponse"
+      }
+     },
+     "default": {
+      "description": "Error",
+      "schema": {
+       "$ref": "#/definitions/ErrorResponse"
+      }
+     }
+    }
+   },
+   "delete": {
+    "operationId": "deleteUser",
+    "description": "delete a user",
+    "parameters": [
+     {
+      "name": "id",
+      "description": "user id",
+      "type": "string",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Success",
+      "schema": {
+       "$ref": "#/definitions/GeneralResponse"
+      }
+     },
+     "default": {
+      "description": "Error",
+      "schema": {
+       "$ref": "#/definitions/ErrorResponse"
+      }
+     }
+    }
+   }
+  },
+  "/swagger": {
+   "x-swagger-pipe": "swagger_raw"
+  }
+ },
+ "definitions": {
+  "Users": {
+   "type": "object",
+   "properties": {
+    "firstName": {
+     "type": "string",
+     "description": "users first name"
+    },
+    "lastName": {
+     "type": "string",
+     "description": "users last name"
+    },
+    "email": {
+     "type": "string",
+     "description": "users email address"
+    }
+   },
+   "required": [
+    "firstName",
+    "lastName",
+    "email"
+   ]
+  },
+  "ErrorResponse": {
+   "required": [
+    "message"
+   ],
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "GetUsersListResponse": {
+   "required": [
+    "users"
+   ],
+   "properties": {
+    "users": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "firstName": {
+        "type": "string"
+       },
+       "lastName": {
+        "type": "string"
+       },
+       "email": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  },
+  "GetUserResponse": {
+   "required": [
+    "_id",
+    "firstName",
+    "lastName",
+    "email"
+   ],
+   "properties": {
+    "_id": {
+     "type": "string"
+    },
+    "firstName": {
+     "type": "string"
+    },
+    "lastName": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string"
+    }
+   }
+  },
+  "GeneralResponse": {
+   "type": "object",
+   "properties": {
+    "success": {
+     "type": "number",
+     "description": "returns 1 if successful"
+    },
+    "description": {
+     "type": "string",
+     "description": "a short general response comment"
+    }
+   },
+   "required": [
+    "success",
+    "description"
+   ]
+  }
+ }
+}
