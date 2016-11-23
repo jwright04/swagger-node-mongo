@@ -10,7 +10,7 @@
   "scripts": {
     "commit": "git-cz",
     "start": "nodemon app.js",
-    "test": "istanbul cover -x '**/test/**' _mocha -- -R spec test/api/controllers/users.js",
+    "test": "NODE_ENV='test' istanbul cover -x '**/test/**' _mocha -- -R spec test/**/*.js",
     "check-coverage": "istanbul check-coverage --statements 10 --branches 10 --functions 10 --lines 10",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release pre && semantic-release post",
@@ -28,6 +28,7 @@
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
+    "chai": "3.5.0",
     "codecov.io": "0.1.6",
     "commitizen": "2.8.6",
     "cz-conventional-changelog": "1.2.0",
@@ -38,6 +39,7 @@
     "istanbul": "0.4.5",
     "js-yaml": "3.7.0",
     "last-release-git": "0.0.2",
+    "mocha": "3.1.2",
     "path": "0.12.7",
     "semantic-release": "^6.3.2",
     "should": "^7.1.0",

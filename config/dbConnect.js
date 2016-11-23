@@ -1,6 +1,8 @@
-let mongoose = require('mongoose');
-let devDBUrl = 'mongodb://localhost:27017/swagger';
-let MONGO_URL = process.env.MONGO_URL || devDBUrl;
+let mongoose     = require('mongoose');
+let environment  = require('../config/environment').environment();
+let localDBUrl   = 'mongodb://localhost:27017/swagger';
+let testingDBUrl = environment.TEST_DB_URL; //add your testing DB here
+let MONGO_URL    = process.env.MONGO_URL || (process.env.NODE_ENV === "test" ? testingDBUrl : localDBUrl);
 
 mongoose.connect(MONGO_URL);
 

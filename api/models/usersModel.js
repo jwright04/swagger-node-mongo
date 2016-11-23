@@ -1,10 +1,10 @@
-let mongoose = require('mongoose');
+let mongoose    = require('mongoose');
 let usersSchema = mongoose.Schema({
 
-    firstName: String,
-    lastName: String,
-    email: String,
-    createdAt:Date
+    firstName : String,
+    lastName  : String,
+    email     : String,
+    createdAt : Date
 });
 
 //pre save the date for each entry
@@ -13,4 +13,4 @@ usersSchema.pre('save', (next) => {
     next();
 });
 
-module.exports =  mongoose.model('Users', usersSchema);
+module.exports = mongoose.model('Users', usersSchema);

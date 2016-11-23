@@ -1,11 +1,11 @@
 'use strict;'
 //Include crypto to generate the movie id
-let crypto = require('crypto');
+let crypto   = require('crypto');
 let mongoose = require('mongoose');
 
-module.exports = function(){
+module.exports = function () {
     return {
-        usersList:[],
+        usersList : [],
         save(user){
             user.id = crypto.randomBytes(20).toString('hex'); // fast enough for our purpose
             this.usersList.push(user);
@@ -14,12 +14,13 @@ module.exports = function(){
 
         find(id){
 
-            if(id){
+            if (id) {
                 return this.usersList.find((user) => {
                     return user.id === id;
                 });
 
-            } else {
+            }
+            else {
 
                 return this.usersList;
             }
@@ -27,13 +28,14 @@ module.exports = function(){
 
         remove(id){
 
-            let found = 0;
+            let found      = 0;
             this.usersList = this.usersList.filter((user) => {
 
-                if(user.id === id){
+                if (user.id === id) {
 
                     found = 1;
-                } else {
+                }
+                else {
 
                     return user.id !== id;
                 }
@@ -49,15 +51,16 @@ module.exports = function(){
                 return user.id === id;
             });
 
-            if (userIndex !== -1){
+            if (userIndex !== -1) {
 
                 this.usersList[userIndex].firstName = user.firstName;
-                this.usersList[userIndex].lastName = user.lastName;
-                this.usersList[userIndex].email = user.email;
+                this.usersList[userIndex].lastName  = user.lastName;
+                this.usersList[userIndex].email     = user.email;
 
                 return 1;
 
-            } else {
+            }
+            else {
 
                 return 0;
             }
