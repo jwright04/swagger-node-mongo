@@ -1,6 +1,6 @@
 'use strict';
 
-let db    = require('../../config/db')();
+let db    = require('../../_BAK/db')();
 let Users = require('../models/usersModel');
 
 module.exports = {
