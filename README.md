@@ -7,7 +7,7 @@
 
 TODO:
 
-[ ] Better test coverage
+[ ] Better test coverage (80%)
 
 [x] Add swagger-ui
 
