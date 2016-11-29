@@ -11,7 +11,7 @@
     "commit": "git-cz",
     "start": "nodemon app.js",
     "test": "NODE_ENV='test' istanbul cover -x '**/test/**' _mocha -- -R spec test/**/*.js",
-    "check-coverage": "istanbul check-coverage --statements 10 --branches 10 --functions 10 --lines 10",
+    "check-coverage": "istanbul check-coverage --statements 50 --branches 50 --functions 50 --lines 50",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release pre && semantic-release post",
     "watch": "gulp watch"
