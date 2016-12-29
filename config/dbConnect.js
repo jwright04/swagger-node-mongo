@@ -8,7 +8,7 @@ mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URL);
 
 mongoose.connection
-    .on('connected', () => {
+      .on('connected', () => {
         console.log(`Mongoose default connection open to ${MONGO_URL}`);
     }).on('error', (err) => {
         console.log('Mongoose default connection error: ' + err);

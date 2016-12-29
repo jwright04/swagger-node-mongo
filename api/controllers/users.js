@@ -11,7 +11,6 @@ module.exports = {
 
 //GET /users operationId
 function getAll (req, res, next) {
-
     Users.find((err, users) => {
         if (err) {
             return res.status(500).json({
@@ -30,6 +29,7 @@ function save (req, res, next) {
     let user = new Users(req.body);
 
     user.save((err, _user) => {
+
         if (err) {
             return res.status(500).json({
                 message : 'Error saving user',
