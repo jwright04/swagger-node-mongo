@@ -1,13 +1,11 @@
 'use strict';
 
 function environment () {
-
     return {
-        TEST_DB_URL : "mongodb://swaguser:3KpvGh8VWYBzFXg@ds115738.mlab.com:15738/swaggertestdb"
+        TEST_DB_URL : "mongodb://127.0.0.1:27017/swagger-node-test-db"
     }
 }
 
 module.exports = {
-
     environment : environment
-}
+};

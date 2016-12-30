@@ -4,12 +4,6 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://en.wikipedia.org/wiki/MIT_License)
 
 # Swagger.io - NodeJS - MongoDB Starter 
-# (Work In Progress)
-
-### TODO:
-
-[ ] Better test coverage (cover CRUD errors)
-
 
 ### Additional Dependencies
 * [TravisCI](http://travis-ci.org) Continuous Integration

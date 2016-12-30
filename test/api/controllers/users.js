@@ -5,220 +5,285 @@ let express       = require('express');
 let rNumber       = require('genrandom').rNumber;
 let Users         = require('../../../api/models/usersModel');
 let userControler = require('../../../api/controllers/users');
+let mongoose      = require('mongoose');
+let mockgoose = require('mockgoose');
 
-let app       = express();
-let currentId = "";
+let app                = express();
+let currentId          = "";
+let fakeSwaggerRequest = {
+	swagger: {
+		params: {
+			id: {}
+		}
+	}
+};
+
 
 describe('controllers', () => {
 
-    describe('users CRUD integration tests', () => {
+	//CRUD db integration tests
+	describe('users CRUD integration tests', () => {
 
-        describe('POST Single User /users', () => {
-            it('should post a single user', (done) => {
-                request(server)
-                    .post('/users')
-                    .expect('Content-Type', /json/)
-                    .field('firstName', "Jane")
-                    .field('lastName', "Doe")
-                    .field('email', "testinguser@testing.com")
-                    .expect(200)
-                    .end((err, res) => {
-                        if (err) {
-                            throw err;
-                        }
-                        done();
-                    });
-            });
-        });
+		describe('POST Single User /users', () => {
 
-        describe('GET All User /users', () => {
-            it('should return a list of all users', (done) => {
-                request(server)
-                    .get('/users')
-                    .expect('Content-Type', /json/)
-                    .expect(200)
-                    .end((err, res) => {
+			it('should post a single user', (done) => {
+				request(server)
+					.post('/users')
+					.expect('Content-Type', /json/)
+					.field('firstName', "Jane")
+					.field('lastName', "Doe")
+					.field('email', "testinguser@testing.com")
+					.expect(200)
+					.end((err, res) => {
+						if (err) {
+							throw err;
+						}
+						done();
+					});
+			});
+		});
 
-                        currentId = res.body.users[0]._id;
+		describe('GET All User /users', () => {
+			it('should return a list of all users', (done) => {
+				request(server)
+					.get('/users')
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.end((err, res) => {
 
-                        if (err) {
-                            throw err;
-                        }
-                        done();
-                    });
-            });
-        });
+						currentId = res.body.users[0]._id;
 
-        describe('GET One User /users/{id}', () => {
+						if (err) {
+							throw err;
+						}
+						done();
+					});
+			});
+		});
 
-            it('should return a single user', (done) => {
+		describe('GET One User /users/{id}', () => {
 
-                request(server)
-                    .get(`/users/${currentId}`)
-                    .expect('Content-Type', /json/)
-                    .expect(200)
-                    .end((err, res) => {
+			it('should return a single user', (done) => {
 
-                        if (err) {
-                            throw err;
-                        }
-                        done();
-                    });
-            });
-        });
+				request(server)
+					.get(`/users/${currentId}`)
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.end((err, res) => {
 
-        describe('PUT One User /users/{id}', () => {
+						if (err) {
+							throw err;
+						}
+						done();
+					});
+			});
+		});
 
-            it('should update a single user', (done) => {
+		describe('PUT One User /users/{id}', () => {
 
-                request(server)
-                    .put(`/users/${currentId}`)
-                    .expect('Content-Type', /json/)
-                    .send({
-                        firstName : 'Manny',
-                        lastName  : 'Cats',
-                        email     : "mytester@gmail123.com"
-                    })
-                    .expect(200)
-                    .end((err, res) => {
+			it('should update a single user', (done) => {
 
-                        if (err) {
-                            throw err;
-                        }
-                        done();
-                    });
-            });
-        });
+				request(server)
+					.put(`/users/${currentId}`)
+					.expect('Content-Type', /json/)
+					.send({
+						firstName: 'Manny',
+						lastName: 'Cats',
+						email: "mytester@gmail123.com"
+					})
+					.expect(200)
+					.end((err, res) => {
 
-        describe('DELETE One User /users/{id}', () => {
+						if (err) {
+							throw err;
+						}
+						done();
+					});
+			});
+		});
 
-            it('should delete a single user', (done) => {
+		describe('DELETE One User /users/{id}', () => {
 
-                request(server)
-                    .del(`/users/${currentId}`)
-                    .expect('Content-Type', /json/)
-                    .expect(200)
-                    .end((err, res) => {
+			it('should delete a single user', (done) => {
 
-                        if (err) {
-                            throw err;
-                        }
-                        done();
-                    });
-            });
-        });
-    });
+				request(server)
+					.del(`/users/${currentId}`)
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.end((err, res) => {
 
-    //unit tests
-    describe('users errors unit tests', ()=> {
+						if (err) {
+							throw err;
+						}
+						done();
+					});
+			});
+		});
+	});
 
-        describe('POST error single user /users', ()=> {
-            let origSave;
-            beforeEach(() => {
-                origSave             = Users.prototype.save;
-                Users.prototype.save = (callback) => {
-                    callback(new Error('my error'));
-                };
-            });
+	//error unit tests
+	describe('users errors unit tests', ()=> {
 
-            afterEach(() => {
-                Users.prototype.save = origSave;
-            });
+		describe('POST error saving new user /users', () => {
+			let origUsersSave;
 
-            it('should error while attempting to post a single user', (done) => {
-                userControler.save({ body : {} }, {
-                    status : (statusCode) => {
-                        expect(statusCode).to.equal(500);
-                        return {
-                            json : (errMsg) => {
-                                expect(errMsg).deep.equal(errMsg, {
-                                    message : 'Error saving user',
-                                    error   : "my error"
-                                });
-                                done();
-                            }
-                        }
-                    }
-                }, ()=> {
+			beforeEach(() => {
+				origUsersSave        = Users.prototype.save;
+				Users.prototype.save = (callback) => {
+					callback(new Error('my error'));
+				};
+			});
 
-                });
-            });
-        });
+			afterEach(() => {
+				Users.prototype.save = origUsersSave;
+			});
 
-        describe('GET error getting all /users', () => {
-            let origUsersFind;
+			it('should error while attempting to get all users', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(500);
+						return fakeRes;
+					},
+					json: (errMsg) => {
+						expect(errMsg.message).to.exist;
+						expect(errMsg.error).to.exist;
+						done();
+					}
+				};
+				userControler.save({ body: {} }, fakeRes, ()=> {
 
-            beforeEach(() => {
-                origUsersFind           = Users.find;
-                Users.find = (callback) => {
-                    callback(new Error('my error'));
-                };
-            });
+				});
+			});
+		});
 
-            afterEach(() => {
-                Users.find = origUsersFind;
-            });
+		describe('GET error getting all /users', () => {
+			let origUsersFind;
 
-            it('should error while attempting to get all users', (done) => {
-                let fakeRes = {
-                    status : (statusCode) => {
-                        expect(statusCode).to.equal(500);
-                        return {
-                            json : (errMsg) => {
-                                expect(errMsg.message).to.exist;
-                                done();
-                            }
-                        }
-                    }
-                }
-                userControler.getAll({ body : {} }, fakeRes, ()=> {
+			beforeEach(() => {
+				origUsersFind = Users.find;
+				Users.find    = (callback) => {
+					callback(new Error('my error'));
+				};
+			});
 
-                });
-            });
-        });
+			afterEach(() => {
+				Users.find = origUsersFind;
+			});
 
-        describe('GET error saving a user /users', () => {
-            let origUsersSave;
+			it('should error while attempting to get all users', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(500);
+						return {
+							json: (errMsg) => {
+								expect(errMsg.message).to.exist;
+								done();
+							}
+						}
+					}
+				};
+				userControler.getAll({ body: {} }, fakeRes, ()=> {
 
-            beforeEach(() => {
-                origUsersSave           = Users.prototype.save;
-                Users.prototype.save = (callback) => {
-                    callback(new Error('my error'));
-                };
-            });
+				});
+			});
+		});
 
-            afterEach(() => {
-                Users.prototype.save = origUsersSave;
-            });
+		describe('GET error getting one /users/{id}', () => {
+			let origUsersFindOne;
 
-            it('should error while attempting to get all users', (done) => {
-                let fakeRes = {
-                    status : (statusCode) => {
-                        expect(statusCode).to.equal(500);
-                        return fakeRes;
-                    },
-                    json : (errMsg) => {
-                        expect(errMsg.message).to.exist;
-                        expect(errMsg.error).to.exist;
-                        done();
-                    }
-                }
-                userControler.save({ body : {} }, fakeRes, ()=> {
+			beforeEach(() => {
+				origUsersFindOne = Users.findOne;
+				Users.findOne    = (id, callback) => {
+					callback(new Error('my error'));
+				};
+			});
 
-                });
-            });
-        });
+			afterEach(() => {
+				Users.findOne = origUsersFindOne;
+			});
 
-    });
+			it('should error while attempting to get one users', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(500);
+						return {
+							json: (errMsg) => {
+								expect(errMsg.message).to.exist;
+								done();
+							}
+						}
+					}
+				};
+				userControler.getOne(fakeSwaggerRequest, fakeRes, ()=> {
 
-    //mongoose connection
-    /*let origConOn = mongoose.connection.on;
+				});
+			});
+		});
 
-    mongoose.connection.on = function (eventName, cb) {
-        if (eventName === 'error') {
-            setTimeout(cb.bind(null, {}), 0);
-        } else {
-            origConOn.apply(this, arguments);
-        }
-    }*/
+		describe('PUT error updating a user /users/{id}', () => {
+			let origUsersUpdate;
+
+			beforeEach(() => {
+				origUsersUpdate = Users.findOne;
+				Users.findOne   = (id, callback) => {
+					callback(new Error('my error'));
+				};
+			});
+
+			afterEach(() => {
+				Users.findOne = origUsersUpdate;
+			});
+
+			it('should error while attempting to update a user', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(500);
+						return fakeRes;
+					},
+					json: (errMsg) => {
+						expect(errMsg.message).to.exist;
+						expect(errMsg.error).to.exist;
+						done();
+					}
+				};
+				userControler.update(fakeSwaggerRequest, fakeRes, ()=> {
+
+				});
+			});
+		});
+
+		describe('DELETE error deleting one /users/{id}', () => {
+			let origUsersFindOne;
+
+			beforeEach(() => {
+				origUsersDeleteOne      = Users.findByIdAndRemove;
+				Users.findByIdAndRemove = (id, callback) => {
+					callback(new Error('my error'));
+				};
+			});
+
+			afterEach(() => {
+				Users.findByIdAndRemove = origUsersDeleteOne;
+			});
+
+			it('should error while attempting delete one users', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(500);
+						return {
+							json: (errMsg) => {
+								expect(errMsg.message).to.exist;
+								done();
+							}
+						}
+					}
+				};
+
+				userControler.deleteUser(fakeSwaggerRequest, fakeRes, ()=> {
+
+				});
+			});
+		});
+
+	});
 });

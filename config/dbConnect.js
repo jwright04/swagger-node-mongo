@@ -10,10 +10,8 @@ mongoose.connect(MONGO_URL);
 mongoose.connection
       .on('connected', () => {
         console.log(`Mongoose default connection open to ${MONGO_URL}`);
-    }).on('error', (err) => {
-        console.log('Mongoose default connection error: ' + err);
-    }).on('disconnected', () => {
-        console.log('Mongoose default connection disconnected');
+    }).on('error', (err) => {//console.log('Mongoose default connection error: ' + err);
+    }).on('disconnected', () => {//console.log('Mongoose default connection disconnected');
     });
 
 process.on('SIGINT', () => {

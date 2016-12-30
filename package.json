@@ -11,7 +11,7 @@
     "commit": "git-cz",
     "start": "nodemon app.js",
     "test": "NODE_ENV='test' istanbul cover -x '**/test/**' _mocha -- -R spec test/**/*.js",
-    "check-coverage": "istanbul check-coverage --statements 50 --branches 50 --functions 50 --lines 50",
+    "check-coverage": "istanbul check-coverage --statements 70 --branches 70 --functions 70 --lines 70",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "semantic-release": "semantic-release pre && semantic-release post",
     "watch": "gulp watch"
@@ -41,6 +41,7 @@
     "js-yaml": "3.7.0",
     "last-release-git": "0.0.2",
     "mocha": "3.1.2",
+    "mockgoose": "^6.0.8",
     "path": "0.12.7",
     "semantic-release": "^6.3.2",
     "should": "^7.1.0",

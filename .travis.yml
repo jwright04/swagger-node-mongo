@@ -5,6 +5,7 @@ cache:
 branches:
   only:
     - master
+services: mongodb
 notifications:
   email: false
 node_js:
