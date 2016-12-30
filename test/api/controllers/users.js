@@ -21,6 +21,10 @@ let fakeSwaggerRequest = {
 
 describe('controllers', () => {
 
+	after(() => {
+		process.exit();
+	});
+
 	//CRUD db integration tests
 	describe('users CRUD integration tests', () => {
 
