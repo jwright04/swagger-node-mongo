@@ -82,9 +82,9 @@ function update (req, res, next) {
 			});
 		}
 
-		_user.firstName = req.body.firstName ? req.body.firstName : _user.firstName;
-		_user.lastName  = req.body.lastName ? req.body.lastName : _user.lastName;
-		_user.email     = req.body.email ? req.body.email : _user.email;
+		_user.firstName = (req.body && req.body.firstName) ? req.body.firstName : _user.firstName;
+		_user.lastName  = (req.body && req.body.lastName) ? req.body.lastName : _user.lastName;
+		_user.email     = (req.body && req.body.email) ? req.body.email : _user.email;
 
 		_user.save((err, user) => {
 			if (err) {
@@ -92,6 +92,7 @@ function update (req, res, next) {
 					message: 'Error getting user.'
 				});
 			}
+			console.log("USER USER", user);
 			if (!user) {
 				return res.status(404).json({
 					message: 'No such user'

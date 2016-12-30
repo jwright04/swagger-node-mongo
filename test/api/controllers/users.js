@@ -220,6 +220,38 @@ describe('controllers', () => {
 			});
 		});
 
+		describe('GET error getting one null /users/{id}', () => {
+			let origUsersFindOne;
+
+			beforeEach(() => {
+				origUsersFindOne = Users.findOne;
+				Users.findOne    = (id, callback) => {
+					callback(null, null);
+				};
+			});
+
+			afterEach(() => {
+				Users.findOne = origUsersFindOne;
+			});
+
+			it('should error while attempting to get one null users', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(404);
+						return {
+							json: (errMsg) => {
+								expect(errMsg.message).to.exist;
+								done();
+							}
+						}
+					}
+				};
+				userControler.getOne(fakeSwaggerRequest, fakeRes, ()=> {
+
+				});
+			});
+		});
+
 		describe('PUT error updating a user /users/{id}', () => {
 			let origUsersUpdate;
 
@@ -243,6 +275,115 @@ describe('controllers', () => {
 					json: (errMsg) => {
 						expect(errMsg.message).to.exist;
 						expect(errMsg.error).to.exist;
+						done();
+					}
+				};
+				userControler.update(fakeSwaggerRequest, fakeRes, ()=> {
+
+				});
+			});
+		});
+
+		describe('PUT error updating a null user /users/{id}', () => {
+			let origUsersUpdate;
+
+			beforeEach(() => {
+				origUsersUpdate = Users.findOne;
+				Users.findOne   = (id, callback) => {
+					callback(null, null);
+				};
+			});
+
+			afterEach(() => {
+				Users.findOne = origUsersUpdate;
+			});
+
+			it('should error while attempting to update a null user', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(404);
+						return fakeRes;
+					},
+					json: (errMsg) => {
+						expect(errMsg.message).to.exist;
+						done();
+					}
+				};
+				userControler.update(fakeSwaggerRequest, fakeRes, ()=> {
+
+				});
+			});
+		});
+
+		describe('PUT error saving updated user /users/{id}', () => {
+			let origUsersUpdate;
+
+			beforeEach(() => {
+				origUsersUpdate = Users.findOne;
+				Users.findOne   = (id, callback) => {
+					callback(null, {
+						firstName: "Jane",
+						lastName: "Smith",
+						email: "j@smithtest.com",
+						save: function(callback){
+							callback(new Error('my error'));
+						}
+					});
+				};
+			});
+
+			afterEach(() => {
+				Users.findOne = origUsersUpdate;
+			});
+
+			it('should error while attempting to save an updated user', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(500);
+						return fakeRes;
+					},
+					json: (errMsg) => {
+						expect(errMsg.message).to.exist;
+						done();
+					}
+				};
+				userControler.update(fakeSwaggerRequest, fakeRes, ()=> {
+
+				});
+			});
+		});
+
+		describe('PUT error saving updated null user /users/{id}', () => {
+			let origUsersUpdate;
+			let hasError = false;
+			let hasUser = false;
+
+			beforeEach(() => {
+				origUsersUpdate = Users.findOne;
+				Users.findOne   = (id, callback) => {
+					callback(null, {
+						firstName: "Jane",
+						lastName: "Smith",
+						email: "j@smithtest.com",
+						save: function(callback){
+							callback(hasError, hasUser);
+						}
+					});
+				};
+			});
+
+			afterEach(() => {
+				Users.findOne = origUsersUpdate;
+			});
+
+			it('should error while attempting to save an updated null user', (done) => {
+				let fakeRes = {
+					status: (statusCode) => {
+						expect(statusCode).to.equal(404);
+						return fakeRes;
+					},
+					json: (errMsg) => {
+						expect(errMsg.message).to.exist;
 						done();
 					}
 				};
