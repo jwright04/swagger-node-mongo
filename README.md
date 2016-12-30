@@ -32,6 +32,8 @@ Select the type of change that you're commiting and push your code back to the r
 [More info here](https://www.npmjs.com/package/commitizen)
 
 ### Test (this happens automatically with TravisCI)
+<span style="color:red">**Important: Make sure mongoDB is running locally before running tests.**</span>  
+
 ```
 npm test
 
